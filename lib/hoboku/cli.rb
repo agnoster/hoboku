@@ -7,9 +7,11 @@ module Hoboku
     class_option :app, desc: "Name of the hoboku application", aliases: '-a'
 
     desc "create [APP_NAME]", "Create the hoboku app"
+    option :remote, desc: "Name of the git remote to assign", aliases: '-r', default: 'hoboku'
     def create(app_name=nil)
       params.app ||= app_name
       app.create
+      app.git.add_remote params.remote
     end
 
     desc "browse", "Open the app in the browser"
