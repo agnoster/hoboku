@@ -1,3 +1,4 @@
+require 'launchy'
 require 'thor'
 require 'hoboku/params'
 require 'hoboku/app'
@@ -16,7 +17,7 @@ module Hoboku
 
     desc "browse", "Open the app in the browser"
     def browse
-      app.browse
+      Launchy.open app.http_uri
     end
 
     protected
