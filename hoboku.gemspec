@@ -6,11 +6,11 @@ require 'hoboku/version'
 Gem::Specification.new do |gem|
   gem.name          = "hoboku"
   gem.version       = Hoboku::VERSION
-  gem.authors       = ["TODO: Write your name"]
-  gem.email         = ["TODO: Write your email address"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.authors       = ["Isaac Wolkerstorfer"]
+  gem.email         = ["i@agnoster.net"]
+  gem.description   = %q{Deploy apps locally to Vagrant, Heroku-style.}
+  gem.summary       = %q{Hoboku is a tool to easily deploy Heroku apps locally using Vagrant, to achieve dev-prod parity.}
+  gem.homepage      = "https://github.com/agnoster/hoboku"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
