@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+#vim:ft=ruby
+
+require 'hoboku/cli'
+
+$PROGRAM_NAME = File.basename(__FILE__)
+Hoboku::CLI.start
