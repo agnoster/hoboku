@@ -1,3 +1,5 @@
+require 'launchy'
+
 module Hoboku
   class App
     attr_accessor :dir, :name
@@ -27,7 +29,7 @@ module Hoboku
     end
 
     def browse
-      system "open", http_uri
+      Launchy.open http_uri
     end
 
     def add_remote
