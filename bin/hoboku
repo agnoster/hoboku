@@ -4,4 +4,4 @@
 require 'hoboku/cli'
 
 $PROGRAM_NAME = File.basename(__FILE__)
-Hoboku::CLI.start
+Hoboku::CLI::Main.start

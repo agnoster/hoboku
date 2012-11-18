@@ -1,33 +1,40 @@
 require 'launchy'
 require 'thor'
+
+require 'hoboku'
 require 'hoboku/params'
-require 'hoboku/app'
 
 module Hoboku
-  class CLI < Thor
-    class_option :app, desc: "Name of the hoboku application", aliases: '-a'
+  module CLI
+    class Base < Thor
+      class_option :app, desc: "Name of the hoboku application", aliases: '-a'
 
-    desc "create [APP_NAME]", "Create the hoboku app"
-    option :remote, desc: "Name of the git remote to assign", aliases: '-r', default: 'hoboku'
-    def create(app_name=nil)
-      params.app ||= app_name
-      app.create
-      app.git.add_remote params.remote
+      protected
+
+      def params
+        @params ||= Params.new(options)
+      end
+
+      def app
+        @app ||= App.new(params.app)
+      end
     end
 
-    desc "browse", "Open the app in the browser"
-    def browse
-      Launchy.open app.http_uri
-    end
+    class Main < Base
+      require 'hoboku/cli/apps'
+      desc "apps", "manage apps (create, destroy)"
+      subcommand "apps", Apps
+      map 'browse' => 'apps:browse'
+      map 'create' => 'apps:create'
+      map 'destroy' => 'apps:destroy'
 
-    protected
-
-    def params
-      @params ||= Params.new(options)
-    end
-
-    def app
-      @app ||= App.new(params.app)
+      def method_missing(meth, *args)
+        meth = self.class.send(:normalize_task_name, meth.to_s)
+        args = meth.to_s.split(/[: ]/).map(&:to_sym) + args
+        subcommand = args.shift
+        args, opts = Thor::Arguments.split(args)
+        invoke subcommand, args, opts
+      end
     end
   end
 end
