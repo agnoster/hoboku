@@ -4,6 +4,8 @@ require 'thor'
 require 'hoboku'
 require 'hoboku/params'
 
+Hoboku.setup
+
 module Hoboku
   module CLI
     class Base < Thor

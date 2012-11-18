@@ -12,13 +12,13 @@ module Hoboku
 
     # Public: The dir all hoboku data is stored in
     def data_dir
-      File.join project_dir, '.hoboku'
+      File.join ENV['HOME'], '.hoboku'
     end
 
     # Public: Ensure Hoboku is ready to rock
     #
     # Creates the Hoboku data dir
-    def init
+    def setup
       Dir.mkdir data_dir unless File.exist? data_dir
     end
   end

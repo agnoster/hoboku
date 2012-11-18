@@ -24,7 +24,6 @@ module Hoboku
     #
     # Initialize the VM
     def create
-      Hoboku.init
       # create the app here
       Dir.mkdir dir
     end
