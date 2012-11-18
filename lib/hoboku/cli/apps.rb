@@ -5,19 +5,31 @@ module Hoboku
   module CLI
     class Apps < Base
       desc "create [APP_NAME]", "Create the hoboku app"
-      option :remote, desc: "Name of the git remote to assign", aliases: '-r', default: 'hoboku'
       def create(app_name=nil)
         params.app ||= app_name
 
         if app.exists?
-          raise Thor::Error, "App already exists. Use `hoboku destroy` if you'd like to destroy it and re-create it."
+          die "App already exists. Use `hoboku destroy` if you'd like to destroy it and re-create it."
         end
 
         say "Creating #{app.name}... "
         app.create
         say "done."
         say app.http_uri + ' | ' + app.git.dir
-        app.git.add_remote params.remote
+        invoke 'remote'
+      end
+
+      desc "remote", "Create the remote for the app"
+      option :remote, desc: "Name of the git remote to assign", aliases: '-r', default: 'hoboku'
+      option :force, desc: "If the remote already exists, reset the uri", aliases: '-f', default: false, type: :boolean
+      def remote
+        if app.git.add_remote params.remote, params.force
+          say "Git remote #{params.remote} created"
+        else
+          say "Git remote #{params.remote} updated"
+        end
+      rescue => e
+        die e.message
       end
 
       desc "destroy", "Destroy the hoboku app"
@@ -36,7 +48,7 @@ module Hoboku
           WARNING
           confirm = ask '>'
           if confirm != app.name
-            raise Thor::Error, "Confirmation did not match #{app.name}. Aborted."
+            die "Confirmation did not match #{app.name}. Aborted."
           end
         end
 

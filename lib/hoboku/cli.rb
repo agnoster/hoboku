@@ -20,9 +20,14 @@ module Hoboku
       def app
         @app ||= App.new(params.app)
       end
+
+      def die(message, status=1)
+        say message
+        exit status
+      end
     end
 
-    class Main < Base
+    class Main < Thor
       require 'hoboku/cli/apps'
       desc "apps", "manage apps (create, destroy)"
       subcommand "apps", Apps
