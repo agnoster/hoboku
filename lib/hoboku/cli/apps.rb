@@ -36,7 +36,7 @@ module Hoboku
       option :confirm, desc: "Confirm the destruction of the app by passing the app name"
       def destroy
         unless app.exists?
-          raise Thor::Error, "You must specify an app to destroy using the -a|--app option."
+          die "You must specify an app to destroy using the -a|--app option."
         end
 
         if params.confirm != app.name

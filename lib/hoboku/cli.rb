@@ -28,6 +28,10 @@ module Hoboku
     end
 
     class Main < Thor
+      def self.exit_on_failure?
+        true
+      end
+
       require 'hoboku/cli/apps'
       desc "apps", "manage apps (create, destroy)"
       subcommand "apps", Apps
