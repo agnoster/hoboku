@@ -20,13 +20,11 @@ module Hoboku
         app.git.add_remote params.remote
       end
 
-      desc "destroy [APP_NAME]", "Destroy the hoboku app"
+      desc "destroy", "Destroy the hoboku app"
       option :confirm, desc: "Confirm the destruction of the app by passing the app name"
-      def destroy(app_name=nil)
-        params.app ||= app_name
-
+      def destroy
         unless app.exists?
-          raise Thor::Error, "You must specify an app to destroy."
+          raise Thor::Error, "You must specify an app to destroy using the -a|--app option."
         end
 
         if params.confirm != app.name
