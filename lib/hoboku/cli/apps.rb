@@ -12,9 +12,9 @@ module Hoboku
           die "App already exists. Use `hoboku destroy` if you'd like to destroy it and re-create it."
         end
 
-        say "Creating #{app.name}... "
+        say "Creating #{app.name}..."
         app.create
-        say "done."
+        say "#{app.name} created successfully!"
         say app.http_uri + ' | ' + app.git.dir
         invoke 'remote'
       end
@@ -52,9 +52,9 @@ module Hoboku
           end
         end
 
-        say "Destroying #{app.name} (including all data and addons)... "
+        say "Destroying #{app.name} (including all data and addons)..."
         app.destroy
-        say "done"
+        say "#{app.name} destroyed."
       end
 
       desc "browse", "Open the app in the browser"

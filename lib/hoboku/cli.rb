@@ -39,6 +39,14 @@ module Hoboku
       map 'create' => 'apps:create'
       map 'destroy' => 'apps:destroy'
 
+      require 'hoboku/cli/vm'
+      desc "vm", "manage VMs"
+      subcommand "vm", VM
+      map 'ssh' => 'vm:ssh'
+      map 'start' => 'vm:start'
+      map 'stop' => 'vm:stop'
+      map 'status' => 'vm:status'
+
       def method_missing(meth, *args)
         meth = self.class.send(:normalize_task_name, meth.to_s)
         args = meth.to_s.split(/[: ]/).map(&:to_sym) + args

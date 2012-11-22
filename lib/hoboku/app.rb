@@ -1,4 +1,5 @@
 require 'hoboku/git'
+require 'hoboku/vm'
 
 module Hoboku
   # Public: An App is the conceptual equivalent of a deployment. It generally
@@ -24,12 +25,15 @@ module Hoboku
     #
     # Initialize the VM
     def create
-      # create the app here
       Dir.mkdir dir
+      File.symlink Hoboku.project_dir, File.join(dir, 'src')
+      vm.write_vagrantfile
+      vm.start
     end
 
     # Public: Destroy the app, and all associated data and plugins
     def destroy
+      vm.destroy
       FileUtils.rm_rf dir
     end
 
@@ -51,6 +55,10 @@ module Hoboku
     # Public: The Git::Repo for the App
     def git
       @git ||= Git::Repo.new "git@#{hostname}:hoboku.git"
+    end
+
+    def vm
+      VM.new self, '10.10.10.10'
     end
   end
 end
