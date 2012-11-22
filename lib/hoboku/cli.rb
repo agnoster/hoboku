@@ -43,8 +43,8 @@ module Hoboku
       desc "vm", "manage VMs"
       subcommand "vm", VM
       map 'ssh' => 'vm:ssh'
-      map 'start' => 'vm:start'
-      map 'stop' => 'vm:stop'
+      map 'start' => 'vm:up'
+      map 'stop' => 'vm:suspend'
       map 'status' => 'vm:status'
 
       def method_missing(meth, *args)

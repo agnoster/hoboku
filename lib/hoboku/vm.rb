@@ -37,8 +37,8 @@ end
 
     def vagrant
       @vagrant ||= Vagrant::Environment.new(
-        cwd: dir,
-        ui_class: Vagrant::UI::Colored
+        :cwd => dir,
+        :ui_class => Vagrant::UI::Colored
       ).tap do |env|
         env.load!
       end
